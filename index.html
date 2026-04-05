@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBA — Junior Accountant Interview</title>
+<style>
+:root{--cream:#f5f0e8;--dark:#1a1a2e;--ink:#2c2c3e;--gold:#c9a84c;--gold-light:#e8d5a3;--muted:#8a8a9a;--border:#d8d0c0;--white:#fdfaf5;--error:#c0392b;--success:#2d6a4f;--warning:#b7600a;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:var(--cream);min-height:100vh;color:var(--ink);display:flex;flex-direction:column;align-items:center;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(ellipse at 20% 10%,rgba(201,168,76,.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(26,26,46,.06) 0%,transparent 50%);}
+.header{width:100%;max-width:900px;padding:40px 40px 0;position:relative;z-index:1;}
+.logo-row{display:flex;align-items:center;gap:12px;margin-bottom:28px;}
+.logo-mark{width:42px;height:42px;background:var(--dark);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-family:Georgia,serif;font-size:18px;font-weight:600;flex-shrink:0;}
+.logo-text{font-family:'Courier New',monospace;font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;line-height:1.4;}
+.divider{height:1px;margin-bottom:36px;background:linear-gradient(90deg,var(--gold) 0%,var(--border) 60%,transparent 100%);}
+.hero{margin-bottom:36px;}
+.role-tag{display:inline-block;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);padding:5px 12px;border-radius:2px;margin-bottom:14px;}
+h1{font-family:Georgia,serif;font-size:clamp(24px,5vw,36px);font-weight:600;color:var(--dark);line-height:1.2;margin-bottom:10px;}
+.hero-sub{font-size:14px;color:var(--muted);line-height:1.6;max-width:560px;}
+.screen{width:100%;max-width:900px;padding:0 40px 60px;position:relative;z-index:1;}
+.hidden{display:none!important;}
+.card{background:var(--white);border:1px solid var(--border);border-radius:4px;padding:32px;margin-bottom:20px;box-shadow:0 2px 16px rgba(26,26,46,.06);}
+.card-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px;}
+.field{display:flex;flex-direction:column;gap:6px;}
+label{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;}
+input,textarea{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;font-size:15px;color:var(--ink);background:var(--cream);border:1px solid var(--border);border-radius:3px;padding:11px 14px;outline:none;transition:border-color .2s,box-shadow .2s;width:100%;}
+input:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12);}
+textarea{resize:vertical;min-height:130px;line-height:1.7;}
+.wait-center{text-align:center;padding:32px 20px;}
+.clock-big{font-family:'Courier New',monospace;font-size:clamp(48px,10vw,72px);font-weight:300;color:var(--dark);letter-spacing:6px;margin:16px 0 4px;line-height:1;}
+.clock-sub{font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:28px;}
+.status-pill{display:inline-flex;align-items:center;gap:8px;font-family:'Courier New',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:6px 16px;border-radius:20px;margin-bottom:16px;}
+.pill-wait{background:rgba(183,96,10,.1);color:var(--warning);border:1px solid rgba(183,96,10,.3);}
+.pill-open{background:rgba(45,106,79,.1);color:var(--success);border:1px solid rgba(45,106,79,.3);}
+.pill-closed{background:rgba(192,57,43,.1);color:var(--error);border:1px solid rgba(192,57,43,.3);}
+.blink{animation:blink 1.4s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+.window-info{display:inline-flex;flex-direction:column;gap:8px;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.25);border-radius:4px;padding:16px 24px;margin-bottom:24px;text-align:left;}
+.window-row{font-size:14px;color:var(--ink);display:flex;align-items:center;gap:10px;}
+.wdot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+.countdown{font-family:'Courier New',monospace;font-size:13px;color:var(--muted);letter-spacing:1px;margin-bottom:12px;}
+.late-note{font-size:13px;color:var(--error);font-style:italic;margin-top:10px;}
+.closed-note{font-size:14px;color:var(--error);line-height:1.6;margin-top:12px;}
+.late-box{background:rgba(183,96,10,.06);border:1px solid rgba(183,96,10,.25);border-radius:4px;padding:20px 24px;margin-bottom:20px;}
+.late-box-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--warning);margin-bottom:10px;}
+.late-box p{font-size:14px;color:var(--ink);line-height:1.6;margin-bottom:14px;}
+.timer-wrap{margin-bottom:18px;}
+.timer-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.timer-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.timer-val{font-family:'Courier New',monospace;font-size:15px;color:var(--dark);letter-spacing:2px;transition:color .3s;}
+.timer-val.t-warn{color:var(--warning);}
+.timer-val.t-urgent{color:var(--error);animation:blink .9s step-end infinite;}
+.timer-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.timer-fill{height:100%;border-radius:2px;transition:width 1s linear,background .5s;background:var(--success);}
+.timer-fill.t-warn{background:var(--warning);}
+.timer-fill.t-urgent{background:var(--error);}
+.progress-wrap{margin-bottom:20px;}
+.progress-top{display:flex;justify-content:space-between;margin-bottom:5px;}
+.progress-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.progress-count{font-family:'Courier New',monospace;font-size:11px;color:var(--muted);}
+.progress-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),#e8c060);border-radius:2px;transition:width .5s ease;}
+.section-badge{display:inline-flex;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dark);background:var(--cream);border:1px solid var(--border);padding:5px 14px;border-radius:2px;margin-bottom:16px;}
+.q-num{font-family:'Courier New',monospace;font-size:11px;color:var(--muted);letter-spacing:1.5px;margin-bottom:8px;}
+.q-text{font-family:Georgia,serif;font-size:21px;font-weight:400;color:var(--dark);line-height:1.5;margin-bottom:10px;}
+.q-hint{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:18px;padding:11px 15px;background:rgba(201,168,76,.05);border-left:3px solid var(--gold);border-radius:0 3px 3px 0;}
+.char-count{font-family:'Courier New',monospace;font-size:11px;color:var(--muted);text-align:right;margin-top:5px;}
+.tb-table{width:100%;border-collapse:collapse;margin:0 0 18px;font-size:14px;}
+.tb-table th{background:var(--dark);color:var(--gold-light);font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:10px 14px;text-align:left;}
+.tb-table th.num{text-align:right;}
+.tb-table td{padding:9px 14px;border-bottom:1px solid var(--border);color:var(--ink);}
+.tb-table td.num{text-align:right;font-family:'Courier New',monospace;font-size:13px;}
+.tb-table tr:nth-child(even) td{background:rgba(245,240,232,.5);}
+.tb-table tr.total td{background:rgba(201,168,76,.08);font-weight:700;border-top:2px solid var(--gold);font-family:'Courier New',monospace;}
+.tb-error{color:var(--error);}
+.mcq-options{display:flex;flex-direction:column;gap:10px;margin-bottom:8px;}
+.mcq-opt{display:flex;align-items:flex-start;gap:12px;padding:13px 16px;border-radius:3px;border:1.5px solid var(--border);cursor:pointer;transition:all .15s;background:var(--cream);user-select:none;}
+.mcq-opt:hover:not(.locked){border-color:var(--gold);background:rgba(201,168,76,.06);}
+.mcq-opt.selected{border-color:var(--dark);background:rgba(26,26,46,.05);}
+.mcq-opt.locked{cursor:default;}
+.mcq-key{font-family:'Courier New',monospace;font-size:12px;color:var(--muted);flex-shrink:0;margin-top:2px;min-width:20px;}
+.mcq-opt.selected .mcq-key{color:var(--dark);font-weight:700;}
+.mcq-text{font-size:14px;line-height:1.5;color:var(--ink);}
+.mcq-recorded{font-family:'Courier New',monospace;font-size:11px;color:var(--success);letter-spacing:1px;margin-top:10px;display:none;}
+.mcq-recorded.show{display:block;}
+.review-notice{background:rgba(26,26,46,.04);border:1px solid var(--border);border-radius:3px;padding:14px 18px;font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:24px;}
+.review-notice strong{color:var(--ink);}
+.review-section{margin-bottom:28px;}
+.review-section-head{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:14px;}
+.review-item{margin-bottom:18px;}
+.review-q{font-size:13px;font-weight:600;color:var(--dark);margin-bottom:4px;line-height:1.4;}
+.review-meta{font-family:'Courier New',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;margin-bottom:6px;}
+.review-a{font-size:14px;color:var(--ink);line-height:1.7;padding:11px 15px;background:var(--cream);border-radius:3px;border-left:2px solid var(--border);white-space:pre-wrap;}
+.clarify-btn{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.3);padding:5px 12px;border-radius:2px;cursor:pointer;transition:all .15s;}
+.clarify-btn:hover{background:rgba(201,168,76,.15);}
+.clarify-btn.added{color:var(--success);background:rgba(45,106,79,.08);border-color:rgba(45,106,79,.3);}
+.clarify-box{margin-top:10px;display:none;}
+.clarify-box.open{display:block;}
+.clarify-box textarea{min-height:80px;font-size:14px;background:var(--white);border-color:rgba(201,168,76,.4);}
+.clarify-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.btn{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;font-size:14px;font-weight:500;padding:12px 28px;border:none;border-radius:3px;cursor:pointer;transition:all .2s;letter-spacing:.3px;}
+.btn-primary{background:var(--dark);color:var(--gold-light);}
+.btn-primary:hover:not(:disabled){background:#2a2a45;transform:translateY(-1px);box-shadow:0 4px 14px rgba(26,26,46,.2);}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed;}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border);}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+.btn-email{background:var(--success);color:#fff;width:100%;font-size:15px;padding:14px 28px;margin-bottom:12px;}
+.btn-email:hover{background:#245a41;transform:translateY(-1px);}
+.btn-download{background:transparent;color:var(--muted);border:1px solid var(--border);width:100%;}
+.btn-download:hover{border-color:var(--gold);color:var(--gold);}
+.btn-row{display:flex;justify-content:flex-end;align-items:center;margin-top:22px;gap:12px;}
+.faith-note{font-size:12px;color:var(--muted);font-style:italic;line-height:1.5;padding:11px 15px;border-left:2px solid var(--gold-light);margin-top:18px;}
+.email-note{font-size:13px;color:var(--muted);line-height:1.6;padding:14px 18px;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:3px;margin-top:14px;text-align:center;}
+.email-note strong{color:var(--ink);}
+.fade-in{animation:fadeIn .3s ease forwards;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.field-row{grid-template-columns:1fr;}.card{padding:22px 18px;}.header,.screen{padding-left:18px;padding-right:18px;}}
+.footer{font-family:'Courier New',monospace;font-size:10px;color:var(--muted);letter-spacing:1.5px;text-align:center;padding:24px;position:relative;z-index:1;width:100%;}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo-row">
+    <div class="logo-mark">CBA</div>
+    <div class="logo-text">Christian Business Angels<br>Nairobi, Kenya</div>
+  </div>
+  <div class="divider"></div>
+</div>
+
+<!-- WAITING ROOM -->
+<div id="screen-wait" class="screen hidden">
+  <div class="hero">
+    <div class="role-tag">Interview Portal</div>
+    <h1>Junior Accountant<br>Application</h1>
+    <p class="hero-sub">Please wait — your interview session will open at the scheduled time. Keep this window open.</p>
+  </div>
+  <div class="card fade-in">
+    <div class="wait-center">
+      <div id="status-pill" class="status-pill pill-wait"><span class="blink">●</span>&nbsp;Waiting to open</div>
+      <div class="clock-big" id="live-clock">--:--:--</div>
+      <div class="clock-sub">Current time · Nairobi (EAT)</div>
+      <div class="window-info">
+        <div class="window-row"><span class="wdot"></span><strong>Scheduled:&nbsp;</strong><span id="info-scheduled">--</span></div>
+        <div class="window-row"><span class="wdot"></span><strong>Closes:&nbsp;</strong><span id="info-closes">--</span></div>
+        <div class="window-row"><span class="wdot"></span><strong>Duration:&nbsp;</strong>60 minutes from scheduled start</div>
+        <div class="window-row"><span class="wdot"></span><strong>Late entry:&nbsp;</strong>Up to 20 minutes (time not extended)</div>
+      </div>
+      <div class="countdown" id="countdown-line"></div>
+      <div id="enter-wrap" class="hidden">
+        <button class="btn btn-primary" id="btn-enter">Enter Interview</button>
+        <div class="late-note hidden" id="late-warning">You are joining late — your remaining time has been reduced accordingly.</div>
+      </div>
+      <div class="closed-note hidden" id="closed-note">This interview session has closed.<br>Please contact CBA to reschedule: <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fb92959d94bb98938992888f929a95998e8892959e88889a959c9e9788d594899c">[email&#160;protected]</a></strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- LATE QUESTION -->
+<div id="screen-late" class="screen hidden">
+  <div class="hero">
+    <div class="role-tag">Late Arrival</div>
+    <h1>You are joining<br>after the start time.</h1>
+    <p class="hero-sub">Your remaining interview time has been reduced. Please answer the question below before entering.</p>
+  </div>
+  <div class="card fade-in">
+    <div class="late-box">
+      <div class="late-box-label">Required before entering</div>
+      <p>You have joined after the scheduled start time. Please briefly explain why — this will be noted in your application alongside your interview responses.</p>
+      <textarea id="late-reason" rows="4" placeholder="Please explain why you joined late…"></textarea>
+    </div>
+    <div class="btn-row"><button class="btn btn-primary" id="btn-enter-late">Enter Interview →</button></div>
+  </div>
+</div>
+
+<!-- WELCOME -->
+<div id="screen-welcome" class="screen hidden">
+  <div class="hero">
+    <div class="role-tag">Candidate Interview</div>
+    <h1>Junior Accountant<br>Application</h1>
+    <p class="hero-sub">This interview is conducted by our AI assistant on behalf of the CBA team. Answer every question honestly and in your own words.</p>
+  </div>
+  <div class="card fade-in">
+    <div class="card-label">Your Details</div>
+    <div class="field-row">
+      <div class="field"><label for="name">Full Name</label><input type="text" id="name" placeholder="e.g. Grace Wanjiku" autocomplete="name"></div>
+      <div class="field"><label for="email">Email Address</label><input type="email" id="email" placeholder="your@email.com" autocomplete="email"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label for="phone">Phone / WhatsApp</label><input type="tel" id="phone" placeholder="+254 …" autocomplete="tel"></div>
+      <div class="field"><label for="edu">Highest Qualification</label><input type="text" id="edu" placeholder="e.g. BCom Accounting, KASNEB Level II"></div>
+    </div>
+    <div class="faith-note">CBA is a faith-based investment organisation. Some questions will touch on values and integrity. We welcome candidates of all backgrounds who share our commitment to honesty in business.</div>
+    <div class="btn-row"><button class="btn btn-primary" id="btn-start">Begin Interview →</button></div>
+  </div>
+</div>
+
+<!-- INTERVIEW -->
+<div id="screen-interview" class="screen hidden">
+  <div class="card fade-in">
+    <div class="timer-wrap">
+      <div class="timer-top"><div class="timer-label">Time Remaining</div><div class="timer-val" id="timer-display">60:00</div></div>
+      <div class="timer-track"><div class="timer-fill" id="timer-fill" style="width:100%"></div></div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-top"><div class="progress-label">Progress</div><div class="progress-count" id="progress-count">0 of 34</div></div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="section-badge" id="section-badge">Section 1</div>
+    <div class="q-num" id="q-num">Question 1 of 34</div>
+    <div class="q-text" id="q-text"></div>
+    <div class="q-hint" id="q-hint"></div>
+    <div id="written-area">
+      <textarea id="answer" rows="6" placeholder="Type your answer here…"></textarea>
+      <div class="char-count" id="char-count">0 characters</div>
+    </div>
+    <div id="tb-area" class="hidden">
+      <table class="tb-table">
+        <thead><tr><th>Account</th><th class="num">Debit (KES)</th><th class="num">Credit (KES)</th></tr></thead>
+        <tbody>
+          <tr><td>Cash at Bank</td><td class="num">142,500</td><td></td></tr>
+          <tr><td>Accounts Receivable</td><td class="num">89,000</td><td></td></tr>
+          <tr><td>Inventory</td><td class="num">54,200</td><td></td></tr>
+          <tr><td>Office Equipment</td><td class="num">210,000</td><td></td></tr>
+          <tr><td>Accumulated Depreciation</td><td></td><td class="num">42,000</td></tr>
+          <tr><td>Accounts Payable</td><td></td><td class="num">67,300</td></tr>
+          <tr><td>Owner's Equity</td><td></td><td class="num">310,000</td></tr>
+          <tr><td>Sales Revenue</td><td></td><td class="num">198,400</td></tr>
+          <tr><td>Cost of Goods Sold</td><td class="num">112,000</td><td></td></tr>
+          <tr><td>Salaries Expense</td><td class="num">48,000</td><td></td></tr>
+          <tr><td>Rent Expense</td><td class="num">24,000</td><td></td></tr>
+          <tr><td>Utilities Expense</td><td class="num">9,500</td><td></td></tr>
+          <tr><td>Loan Payable</td><td></td><td class="num">80,000</td></tr>
+          <tr class="total"><td>Totals</td><td class="num tb-error">689,200</td><td class="num">697,700</td></tr>
+        </tbody>
+      </table>
+      <div class="field">
+        <label for="tb-answer">Your analysis</label>
+        <textarea id="tb-answer" rows="5" placeholder="Identify the error, explain what happened, and state the correct figure…"></textarea>
+        <div class="char-count" id="tb-char-count">0 characters</div>
+      </div>
+    </div>
+    <div id="mcq-area" class="hidden">
+      <div class="mcq-options" id="mcq-options"></div>
+      <div class="mcq-recorded" id="mcq-recorded">Answer recorded — click Next to continue</div>
+    </div>
+    <div class="btn-row"><button class="btn btn-primary" id="btn-next">Next →</button></div>
+  </div>
+</div>
+
+<!-- REVIEW -->
+<div id="screen-review" class="screen hidden">
+  <div class="hero">
+    <div class="role-tag">Review Your Answers</div>
+    <h1>Check everything<br>before submitting.</h1>
+    <p class="hero-sub">Your answers are shown below and cannot be edited. You may add a clarification to any answer by clicking the button next to it.</p>
+  </div>
+  <div class="card fade-in">
+    <div class="review-notice"><strong>These answers are final.</strong> You cannot change what you wrote. To add context or correct an omission, click <strong>+ Add clarification</strong> next to any answer.</div>
+    <div id="review-body"></div>
+    <div class="btn-row" style="margin-top:28px;justify-content:space-between">
+      <span style="font-size:13px;color:var(--muted)">Satisfied with your answers? Submit below.</span>
+      <button class="btn btn-primary" id="btn-final-submit">Submit Interview →</button>
+    </div>
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<div id="screen-summary" class="screen hidden">
+  <div class="hero">
+    <div class="role-tag">Interview Complete</div>
+    <h1>Thank you,<br><span id="summary-name">Candidate</span>.</h1>
+    <p class="hero-sub">Your interview is complete. Your results have been submitted to CBA automatically.</p>
+  </div>
+<div class="card fade-in">
+    <div class="card-label">Your Answers — For Your Reference</div>
+    <div id="summary-body"></div>
+    <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border)">
+      <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--success);margin-bottom:12px">✓ Results Submitted to CBA</div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:20px">Your interview has been submitted to the CBA team automatically. You do not need to do anything else. If you would like a copy for your own records, you can download it below.</p>
+      <button class="btn btn-download" id="btn-download" style="width:100%;margin-bottom:12px">⬇ Download a copy of your answers</button>
+      <div style="font-size:12px;color:var(--muted);text-align:center;line-height:1.6">If you do not receive a confirmation from CBA within 5 business days, please follow up at <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="422b2c242d02212a302b31362b232c2037312b2c273131232c25272e316c2d3025">[email&#160;protected]</a></strong></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">CHRISTIAN BUSINESS ANGELS · NAIROBI · CONFIDENTIAL</div>
+
+<!-- Hidden Formspree form — submits via native POST, bypasses iFrame restrictions -->
+<form id="formspree-form" action="https://formspree.io/f/mdappbrz" method="POST" target="formspree-frame" style="display:none">
+  <input type="hidden" name="_subject" id="fs-subject">
+  <input type="hidden" name="candidate_name" id="fs-name">
+  <input type="hidden" name="email_address" id="fs-email">
+  <input type="hidden" name="phone_whatsapp" id="fs-phone">
+  <input type="hidden" name="highest_qualification" id="fs-edu">
+  <input type="hidden" name="technical_score" id="fs-score">
+  <input type="hidden" name="punctuality" id="fs-punctuality">
+  <input type="hidden" name="late_reason" id="fs-late-reason">
+  <input type="hidden" name="full_transcript" id="fs-transcript">
+</form>
+<iframe name="formspree-frame" style="display:none"></iframe>
+
+<script>
+/* =====================================================
+   HOW TO RESCHEDULE THE INTERVIEW
+   =====================================================
+   1. Find CONFIG below
+   2. Change START_DATE, START_HOUR, START_MINUTE
+   3. Save and paste updated code into Wix
+   4. Done — everything adjusts automatically
+
+   DATE FORMAT: 'YYYY-MM-DD'  e.g. '2026-04-14'
+   TIME: 24-hour format. 16 = 4pm, 9 = 9am, 14 = 2pm
+   All times are Nairobi time (EAT = UTC+3)
+   ===================================================== */
+
+var CONFIG = {
+  START_DATE:    '2026-04-05',  // CHANGE DATE HERE  (YYYY-MM-DD)
+  START_HOUR:    18,            // CHANGE HOUR HERE  (24hr EAT)
+  START_MINUTE:  00,             // CHANGE MINUTE HERE
+  DURATION_MINS: 60,            // Interview duration in minutes
+  GRACE_MINS:    20             // Max minutes late allowed
+};
+
+/* DO NOT EDIT BELOW THIS LINE */
+
+var CBA_EMAIL = 'info@christianbusinessangels.org';
+
+function makeEAT(dateStr,h,m){
+  return new Date(dateStr+'T'+p2(h)+':'+p2(m)+':00+03:00');
+}
+function p2(n){return String(n).padStart(2,'0');}
+
+var SCHED_START = makeEAT(CONFIG.START_DATE,CONFIG.START_HOUR,CONFIG.START_MINUTE);
+var SCHED_END   = new Date(SCHED_START.getTime()+CONFIG.DURATION_MINS*60000);
+var GRACE_END   = new Date(SCHED_START.getTime()+CONFIG.GRACE_MINS*60000);
+
+var SECTIONS = [
+  {label:'Section 1 · Education & Credentials',questions:[
+    {q:'Describe your educational background in accounting or finance.',hint:'Include the institution, qualification obtained, and year of completion.'},
+    {q:'What professional certifications have you achieved — CPA, ACCA, KASNEB, or others — and at what level or part?',hint:'List each certification, the examining body, and the level you have reached.'},
+    {q:'Are you currently studying or pursuing further certification? If so, what is your timeline to complete?',hint:'Be specific — which papers remain, and when do you plan to sit them?'},
+    {q:'What accounting-related training or short courses have you completed outside of formal education?',hint:'Include online courses, workshops, or employer-sponsored training.'},
+  ]},
+  {label:'Section 2 · Work Experience',questions:[
+    {q:'Describe your work experience in accounting or finance — list your roles, employers, and how long you were in each position.',hint:'Start with your most recent role and work backwards.'},
+    {q:'What were your main day-to-day responsibilities in your most recent accounting role?',hint:'Be specific — what tasks did you perform weekly or monthly?'},
+    {q:'What accounting software have you used professionally, and at what level of proficiency would you rate yourself in each?',hint:'e.g. QuickBooks (advanced), Sage (intermediate), Xero (beginner). Do not include Excel or Google Sheets here — that is the next question.'},
+    {q:'How comfortable are you with Excel or Google Sheets — and what is the most complex spreadsheet or model you have built?',hint:'Describe the purpose of the spreadsheet and the key functions or features you used.'},
+    {q:'Have you ever worked with small businesses or entrepreneurs? Describe that experience.',hint:'If not, describe the smallest organisation you have worked with and what that involved.'},
+  ]},
+  {label:'Section 3 · Technical Competence',questions:[
+    {q:'Walk us through your month-end closing process step by step.',hint:'Describe exactly what you do, in what order, and how long it typically takes.'},
+    {q:'Describe how you would verify a business\'s financials if official bank statements were unavailable.',hint:'Think practically — what alternative sources exist and how would you use them?'},
+    {q:'You discover a recurring expense in the accounts that does not appear anywhere in the approved budget. What do you do?',hint:'Walk us through your steps from discovery to resolution, including who you would involve.'},
+    {q:'How do you ensure accuracy when you are managing multiple sets of books or clients simultaneously?',hint:'Describe your system, tools, or habits — not just your intention.'},
+    {q:'How familiar are you with Kenyan tax compliance — specifically PAYE, withholding tax, and corporate income tax? Describe any hands-on experience you have filing or managing these obligations.',hint:'Be specific about which taxes you have worked with directly, the software or portals you used (e.g. iTax), and the size of the organisation involved.'},
+  ]},
+  {label:'Section 4 · Integrity & Values',questions:[
+    {q:'What does financial integrity mean to you in practice? Give us a real or hypothetical example.',hint:'We want to understand how you apply this value, not just how you define it.'},
+    {q:'A colleague asks you to backdate an invoice \'just this once\' to help a client meet a quarter-end deadline. Walk us through your response.',hint:'Be honest about the difficulty — we are interested in how you think, not just the textbook answer.'},
+    {q:'Describe a financial mistake you caught — whether yours or someone else\'s — and what you did about it.',hint:'If you have not yet had this experience professionally, describe how you would handle it hypothetically.'},
+    {q:'Why are you drawn to accounting as a profession — what is it about this work that suits you personally?',hint:'Tell us something genuine. We are not looking for a rehearsed answer.'},
+  ]},
+  {label:'Section 5 · CBA Fit',questions:[
+    {q:'What do you know about Christian Business Angels, and why does this particular role interest you?',hint:'Show us you have done some research — what specifically appeals to you about CBA\'s mission?'},
+    {q:'How do you handle working in an environment where confidentiality is non-negotiable?',hint:'Give an example of how you have protected sensitive financial information in the past.'},
+    {q:'CBA invests in early-stage Kenyan businesses run by entrepreneurs. What excites you — or concerns you — about working in that context?',hint:'Be honest. There is no wrong answer — we want to understand your perspective.'},
+    {q:'This role at CBA goes beyond pure accounting. You may be asked to assist with due diligence on potential investments, follow up with entrepreneurs in our portfolio, and help with occasional events and general CBA activities. How do you feel about a role that blends finance with broader organisational involvement?',hint:'Tell us honestly whether this kind of variety appeals to you and why, or give us an example of a time you worked outside your core job description.'},
+  ]},
+  {label:'Section 6 · Compensation & Availability',questions:[
+    {q:'What is your current monthly gross base salary in KES, excluding any bonuses, allowances, or benefits?',hint:'Give a specific figure. If you are currently unemployed, state your most recent base salary.'},
+    {q:'In the last 12 months, what additional compensation did you receive above your base salary? Include bonuses, allowances, transport, housing, or any other benefits — and briefly describe what each was for.',hint:'If none, simply write None. Be as specific as you can.'},
+    {q:'What monthly gross base salary in KES are you requesting for this position at CBA?',hint:'Please give a specific figure, not a range. We will discuss the full package in person if we proceed.'},
+    {q:'How much notice are you required to give your current employer, and what is your earliest available start date?',hint:'Give both your notice period (e.g. one month) and a specific date (e.g. 1 July 2026).'},
+  ]},
+];
+
+var TECHNICAL=[
+  {topic:'Double-Entry Bookkeeping',q:'A company buys goods worth KES 50,000 on credit. Which journal entry is correct?',hint:'Think about what changes on each side of the accounting equation.',opts:[
+    {key:'A',text:'Debit Purchases KES 50,000 / Credit Cash KES 50,000',correct:false,why:'Cash was not paid — this was a credit purchase, so cash is unaffected.'},
+    {key:'B',text:'Debit Purchases KES 50,000 / Credit Accounts Payable KES 50,000',correct:true,why:'Correct. Purchases debited; Accounts Payable credited.'},
+    {key:'C',text:'Debit Accounts Payable KES 50,000 / Credit Purchases KES 50,000',correct:false,why:'This reverses the entry.'},
+    {key:'D',text:'Debit Cash KES 50,000 / Credit Sales KES 50,000',correct:false,why:'This records a cash sale, not a credit purchase.'}]},
+  {topic:'Accounting Principles',q:'Which statement best describes the matching principle?',hint:'This principle governs how and when expenses appear on the income statement.',opts:[
+    {key:'A',text:'Revenue is recorded only when cash is received.',correct:false,why:'That describes cash-basis accounting.'},
+    {key:'B',text:'Every debit must have an equal and opposite credit.',correct:false,why:'That is the double-entry rule.'},
+    {key:'C',text:'Expenses are recorded in the same period as the revenue they helped generate.',correct:true,why:'Correct. The matching principle ties expense recognition to the revenue it produced.'},
+    {key:'D',text:'All assets must be recorded at their original purchase price.',correct:false,why:'That describes the historical cost principle.'}]},
+  {topic:'Ratio Analysis',q:'Current Assets = KES 800,000 | Current Liabilities = KES 500,000. What is the current ratio and what does it indicate?',hint:'Current Ratio = Current Assets divided by Current Liabilities.',opts:[
+    {key:'A',text:'0.625 — the business cannot meet its short-term obligations.',correct:false,why:'Divide 800,000 by 500,000, not the reverse.'},
+    {key:'B',text:'300,000 — the net working capital, showing a surplus.',correct:false,why:'KES 300,000 is working capital, not the ratio.'},
+    {key:'C',text:'1.6 — for every KES 1.00 of liabilities the business holds KES 1.60 in assets. Healthy liquidity.',correct:true,why:'Correct. 800,000 / 500,000 = 1.6.'},
+    {key:'D',text:'1.6 — dangerously high leverage; the business is over-exposed.',correct:false,why:'A ratio of 1.6 is healthy.'}]},
+  {topic:'Depreciation',q:'What is the PRIMARY accounting purpose of recording depreciation on a fixed asset each year?',hint:'Think about the matching principle and what depreciation does to both the P&L and the balance sheet.',opts:[
+    {key:'A',text:'To set aside cash so the asset can be replaced when it wears out.',correct:false,why:'Depreciation is non-cash.'},
+    {key:'B',text:'To allocate the asset\'s cost across its useful life, matching the expense to the periods it benefits.',correct:true,why:'Correct. Depreciation applies the matching principle to long-lived assets.'},
+    {key:'C',text:'To show the asset at its current market value on the balance sheet.',correct:false,why:'Depreciation shows cost allocation, not market value.'},
+    {key:'D',text:'To reduce the tax liability of the business each year.',correct:false,why:'A consequence, not the primary purpose.'}]},
+  {topic:'Petty Cash',q:'A petty cash float of KES 5,000 is set up. By month-end KES 3,200 has been spent on office supplies. Which entry correctly replenishes the float?',hint:'Replenishment restores the cash spent — the float account stays unchanged.',opts:[
+    {key:'A',text:'Debit Petty Cash KES 3,200 / Credit Bank KES 3,200',correct:false,why:'Petty Cash only debited on creation.'},
+    {key:'B',text:'Debit Office Supplies Expense KES 3,200 / Credit Bank KES 3,200',correct:true,why:'Correct. Expense recognised; bank credited to restore the float.'},
+    {key:'C',text:'Debit Bank KES 3,200 / Credit Office Supplies Expense KES 3,200',correct:false,why:'This reverses the entry.'},
+    {key:'D',text:'Debit Petty Cash KES 5,000 / Credit Bank KES 5,000',correct:false,why:'Only the spent amount is replenished.'}]},
+];
+
+var ALL_QUESTIONS=[];
+SECTIONS.forEach(function(sec){sec.questions.forEach(function(q){ALL_QUESTIONS.push({type:'written',sectionLabel:sec.label,q:q.q,hint:q.hint});});});
+ALL_QUESTIONS.push({type:'trialbalance',sectionLabel:'Practical Exercise 1 of 3',q:'Find the error in this trial balance.',hint:'The debit and credit totals do not match. Identify which figure is wrong, explain what you think happened, and state what the correct figure should be.'});
+ALL_QUESTIONS.push({type:'written',sectionLabel:'Practical Exercise 2 of 3',q:'Write the correct journal entries for the following two transactions for Mama Fua Laundry Services.',hint:'Transaction 1: The business receives KES 25,000 cash from a customer for services rendered. Transaction 2: The business purchases cleaning supplies worth KES 8,000 on credit. For each transaction show the account names, whether each account is debited or credited, and the amount.'});
+ALL_QUESTIONS.push({type:'written',sectionLabel:'Practical Exercise 3 of 3',q:'Prepare a bank reconciliation and identify which items require journal entries.',hint:'Your cash book shows KES 142,000 at month-end. The bank statement shows KES 156,500. Three items: (1) Unpresented cheque of KES 8,200 — not yet cleared. (2) Bank charges of KES 900 not yet in cash book. (3) Customer deposit of KES 23,600 in cash book but not yet on bank statement. Show your reconciliation, state the correct balance, and identify which items need a journal entry and why.'});
+TECHNICAL.forEach(function(t){ALL_QUESTIONS.push({type:'mcq',sectionLabel:'Technical Knowledge',q:t.q,hint:t.hint,topic:t.topic,opts:t.opts});});
+var TOTAL=ALL_QUESTIONS.length;
+
+var currentIdx=0,answers=[],clarifications=[],mcqAnswers={},questionTimes=[],questionStart=null;
+var timerSecs=CONFIG.DURATION_MINS*60,timerInterval=null,summaryText='',lateReason='',entryTime=null;
+for(var i=0;i<TOTAL;i++){answers.push('');clarifications.push('');questionTimes.push(0);}
+
+function p22(n){return String(n).padStart(2,'0');}
+function fmtSecs(s){if(s<60)return s+'s';var m=Math.floor(s/60),sc=s%60;return sc>0?m+'m '+sc+'s':m+'m';}
+function fmtDT(d){
+  var s=d.toLocaleString('en-GB',{timeZone:'Africa/Nairobi',weekday:'long',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',hour12:false});
+  return s;
+}
+function showScreen(id){
+  ['screen-wait','screen-late','screen-welcome','screen-interview','screen-review','screen-summary'].forEach(function(s){var e=document.getElementById(s);if(e)e.classList.add('hidden');});
+  document.getElementById(id).classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+function showEl(id){var e=document.getElementById(id);if(e)e.classList.remove('hidden');}
+function hideEl(id){var e=document.getElementById(id);if(e)e.classList.add('hidden');}
+function setPill(cls,html){var e=document.getElementById('status-pill');e.className='status-pill '+cls;e.innerHTML=html;}
+
+function initWaitingRoom(){
+  showScreen('screen-wait');
+  document.getElementById('info-scheduled').textContent=fmtDT(SCHED_START);
+  document.getElementById('info-closes').textContent=fmtDT(SCHED_END);
+  function tick(){
+    var now=new Date();
+    document.getElementById('live-clock').textContent=now.toLocaleTimeString('en-GB',{timeZone:'Africa/Nairobi',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+    var msToStart=SCHED_START-now,msToEnd=SCHED_END-now;
+    if(now<SCHED_START){
+      setPill('pill-wait','<span class="blink">●</span>&nbsp;Waiting to open');
+      var s=Math.floor(msToStart/1000),h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sc=s%60;
+      document.getElementById('countdown-line').textContent=h>0?'Opens in '+h+'h '+p22(m)+'m '+p22(sc)+'s':'Opens in '+p22(m)+'m '+p22(sc)+'s';
+      hideEl('enter-wrap');hideEl('closed-note');
+    } else if(now<=GRACE_END&&now<=SCHED_END){
+      setPill('pill-open','<span class="blink">●</span>&nbsp;Interview open');
+      var r=Math.floor(msToEnd/1000),rm=Math.floor(r/60),rs=r%60;
+      document.getElementById('countdown-line').textContent='Session closes in '+p22(rm)+'m '+p22(rs)+'s';
+      showEl('enter-wrap');hideEl('closed-note');
+      if(now>SCHED_START)showEl('late-warning');else hideEl('late-warning');
+    } else {
+      setPill('pill-closed','&#x2715;&nbsp;Session closed');
+      document.getElementById('countdown-line').textContent='';
+      hideEl('enter-wrap');showEl('closed-note');
+    }
+  }
+  tick();setInterval(tick,1000);
+}
+
+function handleEnter(){
+  var now=new Date();
+  entryTime=now;
+  var secsElapsed=Math.floor((now-SCHED_START)/1000);
+  timerSecs=Math.max(0,CONFIG.DURATION_MINS*60-secsElapsed);
+  var minsLate=Math.floor((now-SCHED_START)/60000);
+  if(minsLate>2){showScreen('screen-late');}else{showScreen('screen-welcome');}
+}
+function handleEnterLate(){
+  var r=document.getElementById('late-reason').value.trim();
+  if(!r){alert('Please explain why you joined late before entering.');return;}
+  lateReason=r;showScreen('screen-welcome');
+}
+function startInterview(){
+  var name=document.getElementById('name').value.trim();
+  var email=document.getElementById('email').value.trim();
+  if(!name||!email){alert('Please enter your name and email address to begin.');return;}
+  showScreen('screen-interview');currentIdx=0;questionStart=Date.now();renderQ();startTimer();
+}
+function startTimer(){
+  updateTimer();
+  timerInterval=setInterval(function(){timerSecs--;updateTimer();if(timerSecs<=0){clearInterval(timerInterval);forceFinish();}},1000);
+}
+function updateTimer(){
+  var m=Math.floor(timerSecs/60),s=timerSecs%60;
+  var d=document.getElementById('timer-display'),f=document.getElementById('timer-fill');
+  d.textContent=p22(m)+':'+p22(s);f.style.width=((timerSecs/(CONFIG.DURATION_MINS*60))*100)+'%';
+  d.className='timer-val';f.className='timer-fill';
+  if(timerSecs<=600&&timerSecs>180){d.classList.add('t-warn');f.classList.add('t-warn');}
+  else if(timerSecs<=180){d.classList.add('t-urgent');f.classList.add('t-urgent');}
+}
+function forceFinish(){saveCurrentAnswer();showReview();}
+function recordTime(){
+  if(questionStart!==null){var e=Math.floor((Date.now()-questionStart)/1000);questionTimes[currentIdx]=(questionTimes[currentIdx]||0)+e;}
+  questionStart=Date.now();
+}
+function renderQ(){
+  var item=ALL_QUESTIONS[currentIdx];
+  var pct=(currentIdx/TOTAL)*100;
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('progress-count').textContent=currentIdx+' of '+TOTAL;
+  document.getElementById('section-badge').textContent=item.sectionLabel;
+  document.getElementById('q-num').textContent='Question '+(currentIdx+1)+' of '+TOTAL;
+  document.getElementById('q-text').textContent=item.q;
+  document.getElementById('q-hint').textContent=item.hint||'';
+  hideEl('written-area');hideEl('tb-area');hideEl('mcq-area');
+  document.getElementById('mcq-recorded').classList.remove('show');
+  var btn=document.getElementById('btn-next');btn.disabled=false;
+  if(item.type==='written'){
+    showEl('written-area');
+    var ta=document.getElementById('answer');ta.value=answers[currentIdx]||'';
+    ta.oninput=function(){var v=ta.value.length;document.getElementById('char-count').textContent=v+' character'+(v!==1?'s':'');};ta.oninput();
+    btn.textContent=currentIdx===TOTAL-1?'Review & Submit \u2192':'Next \u2192';
+  } else if(item.type==='trialbalance'){
+    showEl('tb-area');
+    var ta2=document.getElementById('tb-answer');ta2.value=answers[currentIdx]||'';
+    ta2.oninput=function(){var v=ta2.value.length;document.getElementById('tb-char-count').textContent=v+' character'+(v!==1?'s':'');};ta2.oninput();
+    btn.textContent='Next \u2192';
+  } else if(item.type==='mcq'){
+    showEl('mcq-area');renderMCQ(currentIdx);
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderMCQ(idx){
+  var item=ALL_QUESTIONS[idx],saved=mcqAnswers[idx];
+  var container=document.getElementById('mcq-options');container.innerHTML='';
+  item.opts.forEach(function(opt){
+    var div=document.createElement('div');
+    div.className='mcq-opt'+(saved?' locked':'');
+    if(saved&&saved.chosen===opt.key)div.classList.add('selected');
+    div.innerHTML='<div class="mcq-key">'+opt.key+'</div><div><div class="mcq-text">'+opt.text+'</div></div>';
+    if(!saved){(function(o){div.addEventListener('click',function(){selectMCQ(idx,o.key);});})(opt);}
+    container.appendChild(div);
+  });
+  var btn=document.getElementById('btn-next'),isLast=idx===TOTAL-1;
+  btn.textContent=isLast?'Review & Submit \u2192':'Next \u2192';btn.disabled=!saved;
+  if(saved)document.getElementById('mcq-recorded').classList.add('show');
+}
+function selectMCQ(idx,key){
+  var opt=ALL_QUESTIONS[idx].opts.find(function(o){return o.key===key;});
+  mcqAnswers[idx]={chosen:key,correct:opt.correct};renderMCQ(idx);
+}
+function saveCurrentAnswer(){
+  var item=ALL_QUESTIONS[currentIdx];
+  if(item.type==='written')answers[currentIdx]=document.getElementById('answer').value.trim();
+  if(item.type==='trialbalance')answers[currentIdx]=document.getElementById('tb-answer').value.trim();
+}
+function handleNext(){
+  saveCurrentAnswer();recordTime();
+  if(ALL_QUESTIONS[currentIdx].type==='mcq'&&!mcqAnswers[currentIdx]){alert('Please select an answer.');return;}
+  if(currentIdx<TOTAL-1){currentIdx++;renderQ();}else{clearInterval(timerInterval);showReview();}
+}
+function showReview(){saveCurrentAnswer();buildReview();showScreen('screen-review');}
+function buildReview(){
+  var html='',sLabel='';
+  ALL_QUESTIONS.forEach(function(item,idx){
+    if(item.sectionLabel!==sLabel){
+      if(sLabel)html+='</div>';sLabel=item.sectionLabel;
+      var head=item.type==='mcq'?'Technical Knowledge · Multiple Choice':item.sectionLabel;
+      html+='<div class="review-section"><div class="review-section-head">'+head+'</div>';
+    }
+    var t=fmtSecs(questionTimes[idx]||0);
+    if(item.type==='written'||item.type==='trialbalance'){
+      html+='<div class="review-item" id="ri-'+idx+'"><div class="review-q">Q'+(idx+1)+'. '+item.q+'</div>';
+      html+='<div class="review-meta">Time spent: '+t+'</div>';
+      html+='<div class="review-a">'+(answers[idx]||'<em style="color:var(--muted)">(no answer given)</em>')+'</div>';
+      html+='<button class="clarify-btn" id="cb-'+idx+'">+ Add clarification</button>';
+      html+='<div class="clarify-box" id="cbox-'+idx+'"><div class="clarify-label">Clarification for Q'+(idx+1)+':</div>';
+      html+='<textarea rows="3" placeholder="Add any clarification or additional information…" id="cta-'+idx+'">'+(clarifications[idx]||'')+'</textarea></div></div>';
+    } else {
+      var ma=mcqAnswers[idx],chosen=ma?item.opts.find(function(o){return o.key===ma.chosen;}):null;
+      html+='<div class="review-item" id="ri-'+idx+'"><div class="review-q">'+item.topic+': '+item.q+'</div>';
+      html+='<div class="review-meta">Time spent: '+t+'</div>';
+      html+='<div class="review-a">Your answer: '+(chosen?chosen.text:'(no answer)')+'</div>';
+      html+='<button class="clarify-btn" id="cb-'+idx+'">+ Add clarification</button>';
+      html+='<div class="clarify-box" id="cbox-'+idx+'"><div class="clarify-label">Clarification:</div>';
+      html+='<textarea rows="3" placeholder="e.g. On reflection I believe the correct answer is…" id="cta-'+idx+'">'+(clarifications[idx]||'')+'</textarea></div></div>';
+    }
+  });
+  if(sLabel)html+='</div>';
+  document.getElementById('review-body').innerHTML=html;
+  ALL_QUESTIONS.forEach(function(_,idx){
+    var btn=document.getElementById('cb-'+idx);if(btn)btn.addEventListener('click',function(){toggleClarify(idx);});
+    var ta=document.getElementById('cta-'+idx);if(ta)ta.addEventListener('input',function(){saveClarify(idx,ta.value);});
+  });
+}
+function toggleClarify(idx){
+  var box=document.getElementById('cbox-'+idx),btn=document.getElementById('cb-'+idx),isOpen=box.classList.contains('open');
+  box.classList.toggle('open');
+  if(!isOpen){btn.textContent='- Hide clarification';btn.classList.add('added');var ta=document.getElementById('cta-'+idx);if(ta)ta.focus();}
+  else{var val=clarifications[idx]||'';btn.textContent=val.trim()?'Clarification added':'+ Add clarification';if(!val.trim())btn.classList.remove('added');}
+}
+function saveClarify(idx,val){clarifications[idx]=val;var btn=document.getElementById('cb-'+idx);if(btn){if(val.trim())btn.classList.add('added');else btn.classList.remove('added');}}
+
+function finalSubmit(){
+  showScreen('screen-summary');
+  document.getElementById('summary-name').textContent=document.getElementById('name').value.trim().split(' ')[0];
+  var mcqItems=ALL_QUESTIONS.filter(function(q){return q.type==='mcq';});
+  var numCorrect=Object.values(mcqAnswers).filter(function(a){return a.correct;}).length;
+  var scorePct=Math.round((numCorrect/mcqItems.length)*100);
+  var html='',sLbl='';
+  ALL_QUESTIONS.forEach(function(item,idx){
+    if(item.type==='written'||item.type==='trialbalance'){
+      if(item.sectionLabel!==sLbl){if(sLbl)html+='</div>';sLbl=item.sectionLabel;html+='<div style="margin-bottom:22px"><div style="font-family:\'Courier New\',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);padding-bottom:7px;border-bottom:1px solid var(--border);margin-bottom:12px">'+item.sectionLabel+'</div>';}
+      html+='<div style="margin-bottom:14px"><div style="font-size:12px;font-weight:600;color:var(--dark);margin-bottom:4px">Q'+(idx+1)+'. '+item.q+'</div>';
+      html+='<div style="font-size:13px;padding:10px 14px;background:var(--cream);border-radius:3px;border-left:2px solid var(--border);line-height:1.6;color:var(--ink)">'+(answers[idx]||'<em style="color:var(--muted)">(no answer)</em>')+'</div>';
+      if(clarifications[idx])html+='<div style="font-size:12px;padding:8px 14px;background:rgba(201,168,76,.06);border-left:2px solid var(--gold);border-radius:3px;margin-top:4px;line-height:1.5;color:var(--ink)"><em>Clarification: '+clarifications[idx]+'</em></div>';
+      html+='</div>';
+    } else {
+      if(item.sectionLabel!==sLbl){if(sLbl)html+='</div>';sLbl=item.sectionLabel;html+='<div style="margin-bottom:22px"><div style="font-family:\'Courier New\',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);padding-bottom:7px;border-bottom:1px solid var(--border);margin-bottom:12px">Technical Knowledge</div>';}
+      var ma=mcqAnswers[idx],chosen=ma?item.opts.find(function(o){return o.key===ma.chosen;}):null;
+      html+='<div style="margin-bottom:8px;font-size:13px;padding:9px 13px;background:var(--cream);border-radius:3px;border-left:2px solid var(--border);color:var(--ink)"><strong>'+item.topic+'</strong> — '+(chosen?chosen.text:'(no answer)')+(clarifications[idx]?'<br><em style="color:var(--muted);font-size:12px">Clarification: '+clarifications[idx]+'</em>':'')+'</div>';
+    }
+  });
+  if(sLbl)html+='</div>';
+  document.getElementById('summary-body').innerHTML=html;
+  summaryText=buildSummaryText(numCorrect,scorePct);
+  // Silent background submission to Formspree
+  submitToFormspree(numCorrect, scorePct);
+}
+
+function buildSummaryText(numCorrect,scorePct){
+  var name=document.getElementById('name').value.trim();
+  var email=document.getElementById('email').value.trim();
+  var phone=document.getElementById('phone').value.trim();
+  var edu=document.getElementById('edu').value.trim();
+  var punctLine='On time.';
+  if(entryTime){var ml=Math.floor((entryTime-SCHED_START)/60000);if(ml>2)punctLine='Joined '+ml+' minutes late.';else if(ml<-1)punctLine='Joined '+Math.abs(ml)+' minutes early.';}
+  var txt='CBA JUNIOR ACCOUNTANT INTERVIEW SUMMARY\nChristian Business Angels · Nairobi · Confidential\n'+'='.repeat(60)+'\n\n';
+  txt+='Candidate:       '+name+'\nEmail:           '+email+'\nPhone:           '+phone+'\nQualification:   '+edu+'\nPunctuality:     '+punctLine+'\n';
+  if(lateReason)txt+='Late reason:     '+lateReason+'\n';
+  txt+='Technical Score: '+scorePct+'% ('+numCorrect+'/5)\n\n'+'='.repeat(60)+'\n\nINTERVIEW RESPONSES\n\n';
+  ALL_QUESTIONS.forEach(function(item,idx){
+    var t=fmtSecs(questionTimes[idx]||0);
+    if(item.type==='written'||item.type==='trialbalance'){
+      txt+='Q'+(idx+1)+' ['+t+']: '+item.q+'\nA: '+(answers[idx]||'(no answer)')+'\n';
+      if(clarifications[idx])txt+='Clarification: '+clarifications[idx]+'\n';
+      txt+='\n';
+    } else {
+      var ma=mcqAnswers[idx],chosen=ma?item.opts.find(function(o){return o.key===ma.chosen;}):null;
+      var cOpt=item.opts.find(function(o){return o.correct;});
+      txt+='Technical ('+item.topic+') ['+t+']: '+(chosen?chosen.text:'(no answer)')+' — '+(ma&&ma.correct?'CORRECT':'INCORRECT')+'\n';
+      if(!(ma&&ma.correct))txt+='  Correct: '+cOpt.text+'\n';
+      if(clarifications[idx])txt+='  Clarification: '+clarifications[idx]+'\n';
+      txt+='\n';
+    }
+  });
+  return txt;
+}
+
+function submitToFormspree(numCorrect, scorePct){
+  var name=document.getElementById('name').value.trim();
+  var email=document.getElementById('email').value.trim();
+  var phone=document.getElementById('phone').value.trim();
+  var edu=document.getElementById('edu').value.trim();
+  document.getElementById('fs-subject').value='CBA Junior Accountant Interview — '+name;
+  document.getElementById('fs-name').value=name;
+  document.getElementById('fs-email').value=email;
+  document.getElementById('fs-phone').value=phone;
+  document.getElementById('fs-edu').value=edu;
+  document.getElementById('fs-score').value=scorePct+'% ('+numCorrect+'/5)';
+  var mLate=entryTime?Math.max(0,Math.floor((entryTime-SCHED_START)/60000)):0;
+document.getElementById('fs-punctuality').value=mLate>2?(mLate+' minutes late'):'On time'; document.getElementById('fs-late-reason').value=lateReason||'N/A';
+  document.getElementById('fs-transcript').value=summaryText||'(no transcript)';
+  document.getElementById('formspree-form').submit();
+  console.log('Formspree: submitted via native form POST');
+}
+
+function emailResults(){
+  var name=document.getElementById('name').value.trim();
+  var subject=encodeURIComponent('CBA Junior Accountant Interview — '+name);
+  var body=encodeURIComponent(summaryText||'Results not yet ready.');
+  try{window.open('mailto:'+CBA_EMAIL+'?subject='+subject+'&body='+body,'_blank');}catch(e){window.top.location.href='mailto:'+CBA_EMAIL+'?subject='+subject+'&body='+body;}
+}
+function downloadResults(){
+  var name=document.getElementById('name').value.trim().replace(/\s+/g,'_')||'Candidate';
+  var blob=new Blob([summaryText||'Results not ready.'],{type:'text/plain'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='CBA_Interview_'+name+'.txt';a.click();URL.revokeObjectURL(a.href);
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  initWaitingRoom();
+  document.getElementById('btn-enter').addEventListener('click',handleEnter);
+  document.getElementById('btn-enter-late').addEventListener('click',handleEnterLate);
+  document.getElementById('btn-start').addEventListener('click',startInterview);
+  document.getElementById('btn-next').addEventListener('click',handleNext);
+  document.getElementById('btn-final-submit').addEventListener('click',finalSubmit);
+  document.getElementById('btn-download').addEventListener('click',downloadResults);
+});
+</script>
+</body>
+</html>
